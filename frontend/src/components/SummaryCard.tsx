@@ -115,7 +115,7 @@ export default function SummaryCard({ summary }: SummaryCardProps) {
     : null;
 
   return (
-    <div className="glass rounded-3xl overflow-hidden mb-8 border border-white/10 shadow-2xl transition-all hover:border-white/20 hover:shadow-primary/5">
+    <div className="glass rounded-[2rem] overflow-hidden mb-10 border border-white/10 shadow-[0_0_40px_rgba(0,0,0,0.6)] transition-all hover:border-primary/30 hover:shadow-[0_0_60px_rgba(255,215,0,0.08)] bg-gradient-to-br from-white/[0.03] to-white/[0.01]">
       <div className="p-6 md:p-8">
         {/* ── HEADER ── */}
         <div className="flex justify-between items-start mb-6">

@@ -8,7 +8,7 @@ export default function Navbar() {
   const { data: session } = useSession();
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-white/10 h-16 flex items-center px-6 md:px-12 backdrop-blur-xl">
+    <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-white/5 bg-black/40 h-20 flex items-center justify-between px-6 md:px-12 backdrop-blur-3xl shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
       <div className="flex items-center gap-2">
         <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
           <Zap className="text-white w-5 h-5 fill-white" />

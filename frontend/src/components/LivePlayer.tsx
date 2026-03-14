@@ -169,8 +169,9 @@ export default function LivePlayer({ url, title, category, thumbnail }: LivePlay
   };
 
   return (
-    <div className="glass rounded-3xl p-6 border border-white/10 overflow-hidden relative group transition-all duration-500 hover:border-white/20">
-      <div className="flex items-center justify-between mb-4">
+    <div className="glass rounded-[2.5rem] p-6 md:p-8 border border-white/20 shadow-[0_0_50px_rgba(0,0,0,0.5)] overflow-hidden relative group transition-all duration-700 hover:border-white/30 hover:shadow-[0_0_80px_rgba(255,215,0,0.15)] bg-gradient-to-br from-black/60 to-black/40 backdrop-blur-3xl">
+      <div className="absolute inset-0 bg-gradient-to-b from-white/[0.05] to-transparent pointer-events-none" />
+      <div className="relative z-10 flex items-center justify-between mb-5">
         <h3 className="font-bold text-lg flex items-center gap-2">
           <Activity className={`w-4 h-4 ${error ? 'text-white/20' : 'text-red-500 animate-pulse'}`} />
           {title}

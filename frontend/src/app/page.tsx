@@ -59,36 +59,52 @@ export default function Home() {
     <main className="pt-24 pb-12 px-4 md:px-0 scroll-smooth">
       <Navbar />
       
-      <div className="max-w-5xl mx-auto">
-        {/* HERO + LIVE PLAYER - Always visible at top */}
-        <div className="mb-10 animate-in fade-in slide-in-from-bottom-4 duration-1000">
-          <h1 className="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">
-            Unlocking <span className="gradient-text text-glow">Sansad</span> <br />
-            Opinions with AI
-          </h1>
-          <p className="text-white/50 text-lg max-w-xl mb-8">
-            Summarizing live parliament sessions into actionable insights and public opinion polls using Pollination AI.
-          </p>
+      {/* Background Orbs */}
+      <div className="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/20 blur-[150px] rounded-full point-events-none -z-10 animate-pulse duration-10000" />
+      <div className="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-500/10 blur-[120px] rounded-full point-events-none -z-10" />
 
-          {/* CHANNEL SWITCHER */}
-          <div className="flex gap-3 mb-4">
-            {channels.map((ch, i) => (
-              <button
-                key={i}
-                onClick={() => setActiveChannel(i)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-2xl text-xs font-black uppercase tracking-widest border transition-all active:scale-95 ${
-                  activeChannel === i
-                    ? 'bg-primary text-black border-primary shadow-lg shadow-primary/30'
-                    : 'bg-white/5 text-white/60 border-white/10 hover:bg-white/10 hover:text-white'
-                }`}
-              >
-                <img src={ch.thumbnail} alt={ch.title} className="w-5 h-5 rounded-full object-cover" />
-                {ch.title}
-              </button>
-            ))}
+      <div className="max-w-6xl mx-auto">
+        {/* HERO SECTION */}
+        <div className="mb-12 animate-in fade-in slide-in-from-bottom-8 duration-1000 flex flex-col md:flex-row items-center md:items-end justify-between gap-6 relative z-10">
+          <div className="flex-1 text-center md:text-left">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-4 leading-tight tracking-tight">
+              Unlocking <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-yellow-200 to-primary text-glow drop-shadow-[0_0_15px_rgba(255,215,0,0.5)]">Sansad</span> <br />
+              <span className="text-3xl md:text-4xl text-white/90">Opinions with AI</span>
+            </h1>
+            <p className="text-white/50 text-base md:text-lg max-w-xl mx-auto md:mx-0 leading-relaxed">
+              Synthesizing live parliament sessions into actionable insights and public opinion polls using neural transcription and AI.
+            </p>
           </div>
 
-          {/* LIVE PLAYER - Full width, always visible */}
+          {/* CHANNEL SWITCHER */}
+          <div className="flex flex-col gap-3">
+            <span className="text-[10px] font-black uppercase tracking-widest text-primary/70 text-center md:text-right flex items-center justify-center md:justify-end gap-2">
+              <Activity className="w-3 h-3 animate-pulse" /> Active Broadcaster
+            </span>
+            <div className="flex flex-wrap justify-center md:justify-end gap-3 p-2 bg-black/40 backdrop-blur-xl border border-white/10 rounded-3xl shadow-2xl">
+              {channels.map((ch, i) => (
+                <button
+                  key={i}
+                  onClick={() => setActiveChannel(i)}
+                  className={`flex items-center gap-2.5 pr-4 pl-2 py-2 rounded-2xl text-xs font-black uppercase tracking-widest border transition-all duration-300 active:scale-95 ${
+                    activeChannel === i
+                      ? 'bg-gradient-to-r from-primary/90 to-primary text-black border-primary shadow-[0_0_20px_rgba(255,215,0,0.2)]'
+                      : 'bg-white/5 text-white/50 border-transparent hover:bg-white/10 hover:border-white/10 hover:text-white'
+                  }`}
+                >
+                  <div className="w-7 h-7 rounded-xl overflow-hidden shadow-inner p-0.5 bg-white/10">
+                    <img src={ch.thumbnail} alt={ch.title} className="w-full h-full object-cover rounded-md" />
+                  </div>
+                  {ch.title}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* LIVE PLAYER - Full width, glowing wrapper */}
+        <div className="mb-14 relative group animate-in fade-in zoom-in-95 duration-1000 delay-150 relative z-20">
+          <div className="absolute -inset-1 bg-gradient-to-r from-primary/30 to-blue-500/30 blur-2xl opacity-40 group-hover:opacity-60 transition-opacity duration-1000 rounded-[3rem] -z-10" />
           <LivePlayer 
             key={activeChannel}
             title={channels[activeChannel].title}
