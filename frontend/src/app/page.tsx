@@ -2,7 +2,7 @@
 
 import Navbar from '@/components/Navbar';
 import Link from 'next/link';
-import { ArrowRight, BookOpen, Activity, Globe, Shield, Scale, BrainCircuit } from 'lucide-react';
+import { ArrowRight, BookOpen, Activity, Globe, Shield, Scale, BrainCircuit, Users } from 'lucide-react';
 
 export default function LandingPage() {
   return (
