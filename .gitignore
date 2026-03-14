@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.db
+*.sqlite3
+uvicorn.log
+
+# Environment files - NEVER commit these
+.env
+.env.local
+.env.production
+
+# Debug/temp scripts
+backend/check_*.py
+backend/debug_*.py
+backend/fix_*.py
+backend/drop_*.py
+backend/migrate.py
+backend/reset_db.py
+backend/test_*.py
+backend/db_output.txt
+backend/parliament.db
+
+# Node
+node_modules/
+.next/
+frontend/node_modules/
+frontend/.next/
+
+# Misc
+.DS_Store
+*.log
