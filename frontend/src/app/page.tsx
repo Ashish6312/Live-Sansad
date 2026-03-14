@@ -1,206 +1,201 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
-import SummaryCard from '@/components/SummaryCard';
-import UploadZone from '@/components/UploadZone';
-import LivePlayer from '@/components/LivePlayer';
-import axios from 'axios';
-import { Loader2, TrendingUp, Users, Activity } from 'lucide-react';
+import Link from 'next/link';
+import { ArrowRight, BookOpen, Activity, Globe, Shield, Scale, BrainCircuit } from 'lucide-react';
 
-export default function Home() {
-  const [summaries, setSummaries] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [trendingTopics, setTrendingTopics] = useState<string[]>([]);
-  const [globalInsight, setGlobalInsight] = useState<string>('');
-  const [activeChannel, setActiveChannel] = useState(0);
-
-  const API = process.env.NEXT_PUBLIC_API_URL;
-  const channels = [
-    { title: 'Aaj Tak', category: 'News', thumbnail: '/img/aajtak.png', url: `${API}/proxy-stream?url=${encodeURIComponent('https://aajtaklive-amd.akamaized.net/hls/live/2014416/aajtak/aajtaklive/live_720p/chunks.m3u8')}` },
-    { title: 'News 24', category: 'News', thumbnail: '/img/news24.png', url: `${API}/proxy-stream?url=${encodeURIComponent('https://vidcdn.vidgyor.com/news24-origin/liveabr/playlist.m3u8')}` },
-    { title: 'Sansad TV', category: 'Parliament', thumbnail: '/img/sansadtv.png', url: `${API}/proxy-stream?url=${encodeURIComponent('https://hls.media.nic.in/live/rstv-360p/index.m3u8')}` },
-  ];
-
-
-  const fetchFeed = async () => {
-    try {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/feed`);
-      setSummaries(res.data);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const fetchTrends = async () => {
-    try {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/global-trends`);
-      setTrendingTopics(res.data.topics || []);
-      setGlobalInsight(res.data.insight || '');
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  useEffect(() => {
-    fetchFeed();
-    fetchTrends();
-    const feedInterval = setInterval(fetchFeed, 10000);
-    const trendInterval = setInterval(fetchTrends, 20000);
-    return () => {
-      clearInterval(feedInterval);
-      clearInterval(trendInterval);
-    };
-  }, []);
-
+export default function LandingPage() {
   return (
-    <main className="pt-24 pb-12 px-4 md:px-0 scroll-smooth">
+    <main className="min-h-screen bg-black text-white selection:bg-primary/30 scroll-smooth">
       <Navbar />
-      
-      {/* Background Orbs */}
-      <div className="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/20 blur-[150px] rounded-full point-events-none -z-10 animate-pulse duration-10000" />
-      <div className="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-500/10 blur-[120px] rounded-full point-events-none -z-10" />
 
-      <div className="max-w-6xl mx-auto">
-        {/* HERO SECTION */}
-        <div className="mb-12 animate-in fade-in slide-in-from-bottom-8 duration-1000 flex flex-col md:flex-row items-center md:items-end justify-between gap-6 relative z-10">
-          <div className="flex-1 text-center md:text-left">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-4 leading-tight tracking-tight">
-              Unlocking <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-yellow-200 to-primary text-glow drop-shadow-[0_0_15px_rgba(255,215,0,0.5)]">Sansad</span> <br />
-              <span className="text-3xl md:text-4xl text-white/90">Opinions with AI</span>
-            </h1>
-            <p className="text-white/50 text-base md:text-lg max-w-xl mx-auto md:mx-0 leading-relaxed">
-              Synthesizing live parliament sessions into actionable insights and public opinion polls using neural transcription and AI.
+      {/* Hero Section */}
+      <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 px-6 lg:px-12 overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/80 to-black z-10"></div>
+          <img 
+            src="/img/parliament_hero.png" 
+            alt="Indian Parliament" 
+            className="w-full h-full object-cover object-center opacity-40 scale-105 animate-[slow-pan_20s_ease-in-out_infinite_alternate]"
+          />
+        </div>
+        
+        <div className="max-w-7xl mx-auto relative z-20 text-center flex flex-col items-center">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass border border-white/10 mb-6 bg-white/5 backdrop-blur-md animate-in fade-in slide-in-from-bottom-5 duration-700">
+            <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/70">Democracy, Decoded</span>
+          </div>
+          
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-6 leading-tight tracking-tighter animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-150">
+            The Voice of <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-[#FFA07A] to-primary text-glow drop-shadow-[0_0_30px_rgba(255,215,0,0.3)]">
+              1.4 Billion People
+            </span>
+          </h1>
+          
+          <p className="text-white/60 text-lg md:text-xl max-w-2xl mb-10 leading-relaxed font-medium animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-300">
+            Live Sansad uses Neural Transcription and Pollination AI to transform live parliamentary debates into actionable insights, real-time public consensus, and transparent laws.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row gap-4 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-500">
+            <Link 
+              href="/live" 
+              className="bg-primary hover:bg-white text-black px-8 py-4 rounded-full font-black uppercase tracking-widest transition-all duration-300 active:scale-95 shadow-[0_0_40px_rgba(255,215,0,0.3)] hover:shadow-white/20 flex items-center justify-center gap-3 group"
+            >
+              Enter Live Dashboard 
+              <Activity className="w-5 h-5 group-hover:scale-110 transition-transform" />
+            </Link>
+            <a 
+              href="#about" 
+              className="glass hover:bg-white/10 text-white border border-white/20 px-8 py-4 rounded-full font-bold uppercase tracking-widest transition-all duration-300 active:scale-95 flex items-center justify-center gap-3 backdrop-blur-md"
+            >
+              Learn the Law
+              <ArrowRight className="w-4 h-4" />
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* About the Parliament Section */}
+      <section id="about" className="py-24 px-6 lg:px-12 relative">
+        <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-primary/5 blur-[120px] rounded-full pointer-events-none -translate-y-1/2"></div>
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div>
+            <h2 className="text-xs text-primary font-black uppercase tracking-[0.3em] mb-4 flex items-center gap-3">
+              <Globe className="w-4 h-4" /> Legislative Framework
+            </h2>
+            <h3 className="text-4xl md:text-5xl font-extrabold mb-6 leading-tight">
+              The Engine of <br />Indian Democracy
+            </h3>
+            <p className="text-white/60 mb-8 leading-relaxed text-lg">
+              The Parliament of India (Sansad) is the supreme legislative body, comprising the President and two Houses: The <span className="text-white font-bold">Rajya Sabha</span> (Council of States) and the <span className="text-white font-bold">Lok Sabha</span> (House of the People). It is where laws are debated, budgets are approved, and the future of the nation is shaped.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div className="glass p-6 rounded-3xl border border-white/10 hover:border-primary/30 transition-colors group">
+                <Users className="w-8 h-8 text-primary mb-4 group-hover:scale-110 transition-transform" />
+                <h4 className="text-xl font-bold mb-2">Lok Sabha</h4>
+                <p className="text-white/50 text-sm">Directly elected by the people, primarily responsible for the national budget and representing public will.</p>
+              </div>
+              <div className="glass p-6 rounded-3xl border border-white/10 hover:border-primary/30 transition-colors group">
+                <Shield className="w-8 h-8 text-primary mb-4 group-hover:scale-110 transition-transform" />
+                <h4 className="text-xl font-bold mb-2">Rajya Sabha</h4>
+                <p className="text-white/50 text-sm">Representing the States & Union Territories, ensuring legislative balance and reviewing laws.</p>
+              </div>
+            </div>
+          </div>
+          <div className="relative group perspective">
+            <div className="absolute -inset-4 bg-gradient-to-tr from-primary/30 to-blue-500/10 blur-2xl opacity-50 group-hover:opacity-100 transition-opacity duration-700 rounded-3xl"></div>
+            <img 
+              src="/img/constitution.png" 
+              alt="Constitution of India" 
+              className="relative w-full rounded-3xl glass border border-white/20 shadow-[-10px_20px_30px_rgba(0,0,0,0.5)] transform transition-transform duration-700 group-hover:rotate-y-2 group-hover:rotate-x-2"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Laws & Policies Section */}
+      <section className="py-24 px-6 lg:px-12 bg-white/[0.02] border-y border-white/5 relative overflow-hidden">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16 max-w-3xl mx-auto">
+            <h2 className="text-xs text-primary font-black uppercase tracking-[0.3em] mb-4 flex items-center justify-center gap-3">
+              <Scale className="w-4 h-4" /> Policy Making
+            </h2>
+            <h3 className="text-4xl md:text-5xl font-extrabold mb-6 leading-tight">
+              How a Bill Becomes a Law
+            </h3>
+            <p className="text-white/50 text-lg leading-relaxed">
+              Understanding the legislative process is crucial for every citizen. A bill goes through multiple stages of reading, debating, and voting before receiving the President's assent.
             </p>
           </div>
 
-          {/* CHANNEL SWITCHER */}
-          <div className="flex flex-col gap-3">
-            <span className="text-[10px] font-black uppercase tracking-widest text-primary/70 text-center md:text-right flex items-center justify-center md:justify-end gap-2">
-              <Activity className="w-3 h-3 animate-pulse" /> Active Broadcaster
-            </span>
-            <div className="flex flex-wrap justify-center md:justify-end gap-3 p-2 bg-black/40 backdrop-blur-xl border border-white/10 rounded-3xl shadow-2xl">
-              {channels.map((ch, i) => (
-                <button
-                  key={i}
-                  onClick={() => setActiveChannel(i)}
-                  className={`flex items-center gap-2.5 pr-4 pl-2 py-2 rounded-2xl text-xs font-black uppercase tracking-widest border transition-all duration-300 active:scale-95 ${
-                    activeChannel === i
-                      ? 'bg-gradient-to-r from-primary/90 to-primary text-black border-primary shadow-[0_0_20px_rgba(255,215,0,0.2)]'
-                      : 'bg-white/5 text-white/50 border-transparent hover:bg-white/10 hover:border-white/10 hover:text-white'
-                  }`}
-                >
-                  <div className="w-7 h-7 rounded-xl overflow-hidden shadow-inner p-0.5 bg-white/10">
-                    <img src={ch.thumbnail} alt={ch.title} className="w-full h-full object-cover rounded-md" />
-                  </div>
-                  {ch.title}
-                </button>
-              ))}
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+            {/* Connecting line for desktop */}
+            <div className="hidden md:block absolute top-[60px] left-[10%] w-[80%] h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent"></div>
+            
+            {[
+              { title: "First Reading", num: "01", desc: "Introduction of the bill in either House. The bill is published in the Gazette of India." },
+              { title: "Discussion & Committees", num: "02", desc: "General discussion takes place. Often, bills are referred to Standing Committees for deep scrutiny." },
+              { title: "Final Assent", num: "03", desc: "After passing both Houses, the President gives assent, making the bill an Act of Parliament." }
+            ].map((step, idx) => (
+              <div key={idx} className="glass p-8 rounded-[2rem] border border-white/10 hover:-translate-y-2 transition-transform duration-500 relative z-10 bg-black/60 shadow-xl backdrop-blur-2xl">
+                <div className="text-[80px] font-black text-white/[0.03] leading-none absolute top-4 right-6 pointer-events-none">
+                  {step.num}
+                </div>
+                <BookOpen className="w-12 h-12 text-primary mb-6" />
+                <h4 className="text-2xl font-bold mb-3">{step.title}</h4>
+                <p className="text-white/50 leading-relaxed font-medium">
+                  {step.desc}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
+      </section>
 
-        {/* LIVE PLAYER - Full width, glowing wrapper */}
-        <div className="mb-14 relative group animate-in fade-in zoom-in-95 duration-1000 delay-150 relative z-20">
-          <div className="absolute -inset-1 bg-gradient-to-r from-primary/30 to-blue-500/30 blur-2xl opacity-40 group-hover:opacity-60 transition-opacity duration-1000 rounded-[3rem] -z-10" />
-          <LivePlayer 
-            key={activeChannel}
-            title={channels[activeChannel].title}
-            category={channels[activeChannel].category}
-            thumbnail={channels[activeChannel].thumbnail}
-            url={channels[activeChannel].url}
-          />
-        </div>
-
-        {/* TWO COLUMN: Feed + Sidebar */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 relative">
-          {/* Left Column: Main Feed */}
-          <div id="insights-feed" className="lg:col-span-8 min-h-[600px]">
-            <div className="animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-150">
-              <UploadZone onSuccess={fetchFeed} />
-            </div>
-
-            <div className="space-y-6 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-300">
-              <div className="flex flex-col gap-4 mb-8 bg-white/5 border border-white/10 rounded-3xl p-6 backdrop-blur-xl relative overflow-hidden group">
-                <div className="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-100 transition-opacity">
-                   <div className="flex items-center gap-1.5 px-2 py-0.5 bg-primary/20 rounded border border-primary/30">
-                      <span className="w-1.5 h-1.5 rounded-full bg-primary animate-ping" />
-                      <span className="text-[8px] font-bold text-primary uppercase">Live Scanner Active</span>
-                   </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Activity className="text-primary w-5 h-5 animate-pulse" />
-                  <h2 className="text-xl font-bold">Trending Intelligence</h2>
-                  <span className="ml-auto text-[8px] bg-white/10 px-2 py-0.5 rounded border border-white/20 text-white/40 uppercase font-black tracking-tighter">Multilingual Sync</span>
-                </div>
-                <p className="text-[10px] text-primary/60 font-black uppercase tracking-widest -mt-2">Supports English & Hindi source text. Use toggles below to translate analysis.</p>
-                <div className="bg-white/5 p-4 rounded-2xl border border-white/5 mt-2">
-                  <p className="text-sm text-white/90 italic leading-relaxed font-medium">
-                    {globalInsight || "AI is scanning live parliamentary data for overarching trends..."}
-                  </p>
-                </div>
-                <div className="flex flex-wrap gap-2 mt-2">
-                  {trendingTopics.length > 0 ? trendingTopics.map((topic, i) => (
-                    <span key={i} className="text-[10px] px-3 py-1.5 bg-primary/10 text-primary rounded-full font-black uppercase tracking-widest border border-primary/20 hover:bg-primary/20 transition-all cursor-default">
-                      #{topic.replace('#', '')}
-                    </span>
-                  )) : (
-                    <span className="text-[10px] text-white/20 uppercase font-black tracking-[0.2em]">Aggregating live metadata...</span>
-                  )}
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between mb-6">
-                 <div className="flex items-center gap-3">
-                    <TrendingUp className="text-accent w-5 h-5" />
-                    <h2 className="text-xl font-bold uppercase tracking-tight">Recent Live Insights</h2>
-                 </div>
-                 {loading && <Loader2 className="w-4 h-4 text-white/20 animate-spin" />}
-              </div>
-
-              <div className="space-y-8 min-h-[400px] relative">
-                <div className="absolute -inset-4 bg-primary/5 blur-3xl -z-10 rounded-[100px]" />
-                {summaries.length > 0 ? (
-                  summaries.map((summary, idx) => (
-                    <div key={summary.id} className="animate-in fade-in slide-in-from-bottom-10 duration-1000 z-10 relative" style={{ animationDelay: `${idx * 150}ms` }}>
-                      <SummaryCard summary={summary} />
-                    </div>
-                  ))
-                ) : !loading ? (
-                  <div className="glass rounded-3xl p-12 text-center border-dashed border-white/10">
-                    <p className="text-white/30 italic">No sessions summarized yet. Upload a video or run live analysis to start.</p>
-                  </div>
-                ) : null}
-              </div>
-            </div>
+      {/* AI Integration Section */}
+      <section className="py-24 px-6 lg:px-12">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div className="order-2 lg:order-1 relative group">
+            <div className="absolute -inset-4 bg-gradient-to-tr from-blue-600/30 to-primary/20 blur-3xl opacity-50 group-hover:opacity-100 transition-opacity duration-700 rounded-3xl"></div>
+            <img 
+              src="/img/ai_analysis.png" 
+              alt="AI Data Analysis" 
+              className="relative w-full rounded-3xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] transform transition-transform duration-700 lg:group-hover:-rotate-2"
+            />
           </div>
-
-          {/* Right Column: Stats Sidebar */}
-          <div className="lg:col-span-4 space-y-6 hidden lg:block">
-            <div className="glass rounded-3xl p-6 border border-white/10 sticky top-24">
-              <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
-                <TrendingUp className="text-accent w-4 h-4" />
-                Impact Analytics
-              </h3>
-              <div className="space-y-4">
-                <div className="flex justify-between items-end">
+          <div className="order-1 lg:order-2">
+            <h2 className="text-xs text-primary font-black uppercase tracking-[0.3em] mb-4 flex items-center gap-3">
+              <BrainCircuit className="w-4 h-4" /> Live Sansad Technology
+            </h2>
+            <h3 className="text-4xl md:text-5xl font-extrabold mb-6 leading-tight">
+              Bridging the Gap <br />with Artificial Intelligence
+            </h3>
+            <p className="text-white/60 mb-8 leading-relaxed text-lg">
+              Parliamentary sessions are long, complex, and overwhelmingly multilingual. We built this platform to bring extreme transparency and instant summarization to the public.
+            </p>
+            <ul className="space-y-6">
+              {[
+                { title: "Neural Transcription Engine", desc: "Listens to live streams and converts speech to text with 98% audio precision in real-time." },
+                { title: "Pollination AI Summarization", desc: "Extracts large transcripts, removes political noise, and creates an unbiased 3-sentence core summary." },
+                { title: "Sentiment & Consensus", desc: "Generates objective polls mid-debate. Anyone can vote. The AI analyzes the winning vote to generate a 'Proper Result' policy." }
+              ].map((feature, idx) => (
+                <li key={idx} className="flex gap-4 group">
+                  <div className="mt-1 w-8 h-8 rounded-full bg-primary/10 border border-primary/20 flex flex-shrink-0 items-center justify-center text-primary font-bold shadow-inner group-hover:bg-primary group-hover:text-black transition-colors">
+                    {idx + 1}
+                  </div>
                   <div>
-                    <p className="text-white/40 text-xs">Total Participations</p>
-                    <p className="text-2xl font-bold">84.2K</p>
+                    <h5 className="font-bold text-lg mb-1">{feature.title}</h5>
+                    <p className="text-white/50 text-sm leading-relaxed">{feature.desc}</p>
                   </div>
-                  <Users className="text-white/20 w-8 h-8" />
-                </div>
-                <div className="h-2 bg-white/5 rounded-full overflow-hidden">
-                  <div className="h-full bg-accent w-[70%]" />
-                </div>
-              </div>
-            </div>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* Footer CTA */}
+      <footer className="py-24 px-6 lg:px-12 border-t border-white/10 bg-gradient-to-b from-transparent to-primary/10 text-center relative overflow-hidden">
+        <div className="max-w-3xl mx-auto relative z-10">
+          <h2 className="text-4xl md:text-5xl font-black mb-6">Ready to participate in <span className="gradient-text">Democracy?</span></h2>
+          <p className="text-white/50 mb-10 text-lg">Watch the live stream, read the AI digests, cast your vote, and shape the consensus.</p>
+          <Link 
+            href="/live" 
+            className="inline-flex bg-white hover:bg-primary text-black px-10 py-5 rounded-full font-black uppercase tracking-widest transition-all duration-300 active:scale-95 shadow-[0_10px_30px_rgba(255,255,255,0.1)] hover:shadow-[0_10px_40px_rgba(255,215,0,0.3)] items-center gap-3"
+          >
+            Launch Live Dashboard 
+            <ArrowRight className="w-5 h-5" />
+          </Link>
+        </div>
+        <div className="mt-20 text-white/30 text-xs font-bold uppercase tracking-widest flex flex-col md:flex-row justify-center gap-6">
+          <span>© 2026 Live Sansad AI</span>
+          <span className="hidden md:inline">•</span>
+          <span>Powered by Pollination AI</span>
+          <span className="hidden md:inline">•</span>
+          <span>Built for absolute transparency</span>
+        </div>
+      </footer>
     </main>
   );
 }
-
