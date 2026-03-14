@@ -13,7 +13,9 @@ from dotenv import load_dotenv
 import json
 import re
 import urllib.parse
+from passlib.context import CryptContext
 
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 load_dotenv()
 
 latest_transcription_id = 0
@@ -62,6 +64,14 @@ class Comment(Base):
     text = Column(Text)
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
+class User(Base):
+    __tablename__ = "users"
+    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    email = Column(String, unique=True, index=True)
+    name = Column(String)
+    hashed_password = Column(String)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+
 Base.metadata.create_all(bind=engine)
 
 # --- Pydantic Models ---
@@ -75,6 +85,15 @@ class CommentCreate(BaseModel):
     user_id: str
     user_name: str
     text: str
+
+class UserCreate(BaseModel):
+    email: str
+    name: str
+    password: str
+
+class UserLogin(BaseModel):
+    email: str
+    password: str
 
 class SummaryResponse(BaseModel):
     id: str
@@ -378,6 +397,29 @@ async def analyze_consensus(summary_id: str, db: Session = Depends(get_db)):
         print(f"Consensus Error: {e}")
     total = sum(vote_data.values()) if vote_data else 0
     return {"result": f"Community consensus is forming across {total} participants. Public sentiment leans toward greater transparency in subsidy allocation and accelerated renewable energy deployment."}
+
+
+# --- Authentication Endpoints ---
+@app.post("/signup")
+def signup(user: UserCreate, db: Session = Depends(get_db)):
+    db_user = db.query(User).filter(User.email == user.email).first()
+    if db_user:
+        raise HTTPException(status_code=400, detail="Email already registered")
+    
+    hashed_password = pwd_context.hash(user.password)
+    new_user = User(email=user.email, name=user.name, hashed_password=hashed_password)
+    db.add(new_user)
+    db.commit()
+    db.refresh(new_user)
+    return {"message": "User created successfully", "user_id": new_user.id, "name": new_user.name, "email": new_user.email}
+
+@app.post("/login")
+def login(user: UserLogin, db: Session = Depends(get_db)):
+    db_user = db.query(User).filter(User.email == user.email).first()
+    if not db_user or not pwd_context.verify(user.password, db_user.hashed_password):
+        raise HTTPException(status_code=401, detail="Invalid email or password")
+    
+    return {"message": "Login successful", "user_id": db_user.id, "name": db_user.name, "email": db_user.email}
 
 
 if __name__ == "__main__":

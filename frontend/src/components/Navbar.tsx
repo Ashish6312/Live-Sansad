@@ -44,13 +44,13 @@ export default function Navbar() {
             </button>
           </div>
         ) : (
-          <button 
-            onClick={() => signIn('google')}
+          <Link 
+            href="/login"
             className="flex items-center gap-2 bg-white text-black px-4 py-2 rounded-full font-semibold hover:bg-white/90 transition-all shadow-xl active:scale-95"
           >
             <LogIn className="w-4 h-4" />
-            Sign in with Google
-          </button>
+            Sign in
+          </Link>
         )}
       </div>
     </nav>
