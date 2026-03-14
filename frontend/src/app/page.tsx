@@ -40,7 +40,7 @@ export default function LandingPage() {
           <div className="flex flex-col sm:flex-row gap-4 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-500">
             <Link 
               href="/live" 
-              className="bg-primary hover:bg-white text-black px-8 py-4 rounded-full font-black uppercase tracking-widest transition-all duration-300 active:scale-95 shadow-[0_0_40px_rgba(255,215,0,0.3)] hover:shadow-white/20 flex items-center justify-center gap-3 group"
+              className="bg-gradient-to-r from-yellow-400 to-yellow-600 hover:from-white hover:to-white text-black px-8 py-4 rounded-full font-black uppercase tracking-widest transition-all duration-300 active:scale-95 shadow-[0_0_40px_rgba(255,215,0,0.3)] hover:shadow-[0_0_40px_rgba(255,255,255,0.4)] flex items-center justify-center gap-3 group"
             >
               Enter Live Dashboard 
               <Activity className="w-5 h-5 group-hover:scale-110 transition-transform" />

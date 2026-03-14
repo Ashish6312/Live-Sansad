@@ -19,8 +19,8 @@ export default function Navbar() {
       </Link>
 
       <div className="flex-1 flex justify-center">
-        <Link href="/live" className="text-xs uppercase tracking-[0.2em] font-black text-white/50 hover:text-primary transition-colors border border-white/10 hover:border-primary/50 px-4 py-2 rounded-full hidden md:inline-flex items-center gap-2 bg-white/5">
-           <Activity className="w-3 h-3 animate-pulse" /> Live Dashboard
+        <Link href="/live" className="text-xs uppercase tracking-[0.2em] font-black text-black bg-gradient-to-r from-yellow-400 to-yellow-600 hover:from-white hover:to-white transition-colors border border-yellow-500/50 hover:border-white px-5 py-2.5 rounded-full hidden md:inline-flex items-center gap-2 shadow-[0_0_15px_rgba(255,215,0,0.3)]">
+           <Activity className="w-4 h-4" /> LIVE DASHBOARD
         </Link>
       </div>
 
