@@ -17,9 +17,9 @@ export default function Home() {
 
   const API = process.env.NEXT_PUBLIC_API_URL;
   const channels = [
-    { title: 'Aaj Tak', category: 'News', thumbnail: '/img/aajtak.webp', url: `${API}/proxy-stream?url=${encodeURIComponent('https://aajtaklive-amd.akamaized.net/hls/live/2014416/aajtak/aajtaklive/live_720p/chunks.m3u8')}` },
-    { title: 'News 24', category: 'News', thumbnail: '/img/news24.webp', url: `${API}/proxy-stream?url=${encodeURIComponent('https://vidcdn.vidgyor.com/news24-origin/liveabr/playlist.m3u8')}` },
-    { title: 'Sansad TV', category: 'Parliament', thumbnail: '/img/sansad.jpg', url: `${API}/proxy-stream?url=${encodeURIComponent('https://hls.media.nic.in/live/rstv-360p/index.m3u8')}` },
+    { title: 'Aaj Tak', category: 'News', thumbnail: '/img/aajtak.png', url: `${API}/proxy-stream?url=${encodeURIComponent('https://aajtaklive-amd.akamaized.net/hls/live/2014416/aajtak/aajtaklive/live_720p/chunks.m3u8')}` },
+    { title: 'News 24', category: 'News', thumbnail: '/img/news24.png', url: `${API}/proxy-stream?url=${encodeURIComponent('https://vidcdn.vidgyor.com/news24-origin/liveabr/playlist.m3u8')}` },
+    { title: 'Sansad TV', category: 'Parliament', thumbnail: '/img/sansadtv.png', url: `${API}/proxy-stream?url=${encodeURIComponent('https://hls.media.nic.in/live/rstv-360p/index.m3u8')}` },
   ];
 
 
@@ -144,10 +144,11 @@ export default function Home() {
                  {loading && <Loader2 className="w-4 h-4 text-white/20 animate-spin" />}
               </div>
 
-              <div className="space-y-8 min-h-[400px]">
+              <div className="space-y-8 min-h-[400px] relative">
+                <div className="absolute -inset-4 bg-primary/5 blur-3xl -z-10 rounded-[100px]" />
                 {summaries.length > 0 ? (
                   summaries.map((summary, idx) => (
-                    <div key={summary.id} className={`animate-in fade-in slide-in-from-bottom-10 duraction-1000`} style={{ animationDelay: `${idx * 150}ms` }}>
+                    <div key={summary.id} className="animate-in fade-in slide-in-from-bottom-10 duration-1000 z-10 relative" style={{ animationDelay: `${idx * 150}ms` }}>
                       <SummaryCard summary={summary} />
                     </div>
                   ))

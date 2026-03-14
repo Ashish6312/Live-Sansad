@@ -35,6 +35,14 @@ export default function SummaryCard({ summary }: SummaryCardProps) {
   useEffect(() => {
     fetchVotes();
     fetchComments();
+
+    // Make the room update in real-time
+    const interval = setInterval(() => {
+      fetchVotes();
+      fetchComments();
+    }, 5000);
+
+    return () => clearInterval(interval);
   }, [summary.id]);
 
   const fetchVotes = async () => {

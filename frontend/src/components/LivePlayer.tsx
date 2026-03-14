@@ -45,7 +45,7 @@ export default function LivePlayer({ url, title, category, thumbnail }: LivePlay
   // LIVE AJAX DATA: Captions (Direct Stream Sync)
   useEffect(() => {
     let interval: NodeJS.Timeout;
-    if (playing && isSTTActive) {
+    if (isSTTActive) {
       interval = setInterval(async () => {
         try {
           const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/live-transcription?last_id=${lastCaptionId}`);
@@ -288,15 +288,11 @@ export default function LivePlayer({ url, title, category, thumbnail }: LivePlay
         >
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/20 pointer-events-none"></div>
           <div className="text-xs text-white/70 leading-relaxed font-medium transition-all duration-500">
-            {playing ? (
-              <div className="inline">
-                {displayedCaptions || "Connecting to Neural Transcription Engine..."}
-                <span className="inline-block w-1.5 h-3.5 bg-primary ml-1 animate-pulse" />
-                <div ref={captionsEndRef} />
-              </div>
-            ) : (
-              <span className="text-white/20 italic">Start playback to begin stream sync analysis...</span>
-            )}
+            <div className="inline">
+              {displayedCaptions || "Connecting to Neural Transcription Engine..."}
+              <span className="inline-block w-1.5 h-3.5 bg-primary ml-1 animate-pulse" />
+              <div ref={captionsEndRef} />
+            </div>
           </div>
         </div>
       </div>
